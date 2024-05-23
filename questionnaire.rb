@@ -13,7 +13,7 @@ QUESTIONS = {
 def do_prompt
   answers = {}
   QUESTIONS.each do |question_key, question|
-    print "#{question} (Yes/No): "
+    puts "#{question} (Yes/No): "
     answer = gets.chomp.downcase
     answers[question_key] = answer == "yes" || answer == "y" ? true : false
   end
