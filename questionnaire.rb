@@ -32,6 +32,7 @@ def do_report(answers)
   end
   avg_rating = store.transaction{ (store[:ratings].sum.to_f / store[:ratings].size).round(2) }
   p "Average Rating for all Run: #{avg_rating}%"
+  current_rating
 end
 
 def run_survey
