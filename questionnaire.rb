@@ -25,13 +25,13 @@ def do_report(answers)
   store = PStore.new(STORE_NAME)
   yes_total = answers.count{|_key, val| val }
   current_rating = yes_total.to_f / total_questions * 100
-  p "Your Rating for this Run : #{current_rating.round(2)}"
+  puts "Your Rating for this Run : #{current_rating.round(2)}"
   store.transaction do 
     store[:ratings] ||=[]
     store[:ratings] << current_rating
   end
   avg_rating = store.transaction{ (store[:ratings].sum.to_f / store[:ratings].size).round(2) }
-  p "Average Rating for all Run: #{avg_rating}%"
+  puts "Average Rating for all Run: #{avg_rating}%"
   current_rating
 end
 
