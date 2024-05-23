@@ -34,5 +34,15 @@ def do_report(answers)
   p "Average Rating for all Run: #{avg_rating}%"
 end
 
-ans = do_prompt
-do_report(ans)
+def run_survey
+  loop do
+    p "Welcome to the Coding Survey !"
+    answers = do_prompt
+    do_report(answers)
+    p "Do you want to run the survey again? (Yes/No) : "
+    rerun = gets.chomp.downcase
+    break unless rerun == 'yes' || rerun == 'y'
+  end
+end
+
+run_survey
