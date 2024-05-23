@@ -1,7 +1,6 @@
 require "pstore" # https://github.com/ruby/pstore
 
 STORE_NAME = "tendable.pstore"
-store = PStore.new(STORE_NAME)
 
 QUESTIONS = {
   "q1" => "Can you code in Ruby?",
@@ -21,4 +20,19 @@ def do_prompt
   answers
 end
 
-do_prompt
+def do_report(answers)
+  total_questions = QUESTIONS.size
+  store = PStore.new(STORE_NAME)
+  yes_total = answers.count{|_key, val| val }
+  current_rating = yes_total.to_f / total_questions * 100
+  p "Your Rating for this Run : #{current_rating.round(2)}"
+  store.transaction do 
+    store[:ratings] ||=[]
+    store[:ratings] << current_rating
+  end
+  avg_rating = store.transaction{ (store[:ratings].sum.to_f / store[:ratings].size).round(2) }
+  p "Average Rating for all Run: #{avg_rating}%"
+end
+
+ans = do_prompt
+do_report(ans)
